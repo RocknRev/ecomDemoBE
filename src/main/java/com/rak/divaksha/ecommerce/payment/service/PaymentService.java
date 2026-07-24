@@ -1,0 +1,16 @@
+package com.rak.divaksha.ecommerce.payment.service;
+
+import com.rak.divaksha.ecommerce.payment.dto.CreatePaymentRequest;
+import com.rak.divaksha.ecommerce.payment.dto.CreatePaymentResponse;
+import com.rak.divaksha.ecommerce.payment.dto.PaymentResponse;
+import com.rak.divaksha.ecommerce.payment.dto.VerifyPaymentRequest;
+
+public interface PaymentService {
+
+    CreatePaymentResponse createPayment(CreatePaymentRequest request);
+
+    PaymentResponse verifyPayment(VerifyPaymentRequest request);
+
+    PaymentResponse getPayment(Long orderId);
+
+}
