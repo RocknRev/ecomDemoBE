@@ -1,0 +1,26 @@
+package com.rak.divaksha.ecommerce.order.dto;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.math.BigDecimal;
+
+@Getter
+@Setter
+@Builder
+public class OrderItemResponse {
+
+    private Long productId;
+
+    private String productName;
+
+    private String sku;
+
+    private BigDecimal price;
+
+    private Integer quantity;
+
+    private BigDecimal subtotal;
+
+}
