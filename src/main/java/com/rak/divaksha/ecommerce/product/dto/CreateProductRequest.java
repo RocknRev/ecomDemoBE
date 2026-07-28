@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -52,6 +53,8 @@ public class CreateProductRequest {
     private Boolean featured = false;
 
     private List<String> flavors;
+
+    private Map<String, String> flavorImages;
 
     private List<String> highlights;
 

@@ -8,7 +8,9 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -70,6 +72,12 @@ public class Product extends BaseEntity {
     @CollectionTable(name = "t_product_flavors", joinColumns = @JoinColumn(name = "product_id"))
     @Column(name = "flavor", nullable = false)
     private List<String> flavors = new ArrayList<>();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "t_product_flavor_images", joinColumns = @JoinColumn(name = "product_id"))
+    @MapKeyColumn(name = "flavor", nullable = false)
+    @Column(name = "image_url", nullable = false, columnDefinition = "TEXT")
+    private Map<String, String> flavorImages = new LinkedHashMap<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "t_product_highlights", joinColumns = @JoinColumn(name = "product_id"))

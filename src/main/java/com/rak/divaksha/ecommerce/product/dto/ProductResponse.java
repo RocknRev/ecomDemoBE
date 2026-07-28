@@ -7,6 +7,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -52,6 +53,8 @@ public class ProductResponse {
     private Boolean featured;
 
     private List<String> flavors;
+
+    private Map<String, String> flavorImages;
 
     private List<String> highlights;
 

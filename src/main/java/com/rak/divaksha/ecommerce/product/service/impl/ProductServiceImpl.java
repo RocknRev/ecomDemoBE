@@ -24,6 +24,7 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -69,6 +70,7 @@ public class ProductServiceImpl implements ProductService {
         product.setActive(request.getActive());
         product.setFeatured(request.getFeatured());
         product.setFlavors(normalizeFlavors(request.getFlavors()));
+        product.setFlavorImages(normalizeFlavorImages(request.getFlavorImages(), product.getFlavors()));
         product.setHighlights(normalizeFlavors(request.getHighlights()));
         product.setIngredients(normalizeFlavors(request.getIngredients()));
 
@@ -168,6 +170,9 @@ public class ProductServiceImpl implements ProductService {
         if (request.getFlavors() != null)
             product.setFlavors(normalizeFlavors(request.getFlavors()));
 
+        if (request.getFlavorImages() != null)
+            product.setFlavorImages(normalizeFlavorImages(request.getFlavorImages(), product.getFlavors()));
+
         if (request.getHighlights() != null)
             product.setHighlights(normalizeFlavors(request.getHighlights()));
 
@@ -231,6 +236,17 @@ public class ProductServiceImpl implements ProductService {
                 .map(String::trim)
                 .distinct()
                 .toList();
+    }
+
+    private Map<String, String> normalizeFlavorImages(Map<String, String> images, List<String> flavors) {
+        if (images == null) return new java.util.LinkedHashMap<>();
+        return images.entrySet().stream()
+                .filter(entry -> flavors.contains(entry.getKey()) && StringUtils.isNotBlank(entry.getValue()))
+                .collect(java.util.stream.Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> entry.getValue().trim(),
+                        (first, ignored) -> first,
+                        java.util.LinkedHashMap::new));
     }
 
     @Override
@@ -315,6 +331,7 @@ public class ProductServiceImpl implements ProductService {
                 .active(product.getActive())
                 .featured(product.getFeatured())
                 .flavors(product.getFlavors())
+                .flavorImages(product.getFlavorImages())
                 .highlights(product.getHighlights())
                 .ingredients(product.getIngredients())
                 .images(images)
