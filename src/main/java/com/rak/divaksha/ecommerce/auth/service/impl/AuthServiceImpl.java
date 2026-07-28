@@ -8,6 +8,7 @@ import com.rak.divaksha.ecommerce.auth.entity.User;
 import com.rak.divaksha.ecommerce.auth.repository.RoleRepository;
 import com.rak.divaksha.ecommerce.auth.repository.UserRepository;
 import com.rak.divaksha.ecommerce.auth.service.AuthService;
+import com.rak.divaksha.ecommerce.auth.service.OtpService;
 import com.rak.divaksha.ecommerce.common.enums.RoleName;
 import com.rak.divaksha.ecommerce.exception.BadRequestException;
 import com.rak.divaksha.ecommerce.security.CustomUserDetails;
@@ -27,12 +28,17 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
+    private final OtpService otpService;
 
     @Override
     public AuthResponse register(RegisterRequest request) {
 
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new BadRequestException("Email already exists");
+        }
+
+        if (!otpService.isVerified(request.getEmail())) {
+            throw new BadRequestException("Email is not verified");
         }
 
         Role customerRole = roleRepository.findByName(RoleName.ROLE_CUSTOMER)
@@ -49,6 +55,7 @@ public class AuthServiceImpl implements AuthService {
         user = userRepository.save(user);
 
         String token = jwtUtil.generateToken(new CustomUserDetails(user));
+        otpService.clearOtp(user.getEmail());
 
         return AuthResponse.builder()
                 .userId(user.getId())

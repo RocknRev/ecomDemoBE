@@ -128,6 +128,7 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setProduct(product);
             orderItem.setProductName(product.getName());
             orderItem.setSku(product.getSku());
+            orderItem.setFlavor(cartItem.getFlavor());
             orderItem.setPrice(price);
             orderItem.setQuantity(cartItem.getQuantity());
             orderItem.setSubtotal(lineTotal);
@@ -277,6 +278,7 @@ public class OrderServiceImpl implements OrderService {
                                                 .productId(item.getProduct().getId())
                                                 .productName(item.getProductName())
                                                 .sku(item.getSku())
+                                                .flavor(item.getFlavor())
                                                 .price(item.getPrice())
                                                 .quantity(item.getQuantity())
                                                 .subtotal(item.getSubtotal())

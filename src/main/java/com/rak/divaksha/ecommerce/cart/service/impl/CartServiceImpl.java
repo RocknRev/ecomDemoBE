@@ -60,7 +60,6 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public CartResponse getCart() {
 
         Cart cart = getOrCreateCart();
@@ -86,8 +85,16 @@ public class CartServiceImpl implements CartService {
             throw new BadRequestException("Insufficient stock");
         }
 
+        String flavor = request.getFlavor() == null ? "" : request.getFlavor().trim();
+        if (!product.getFlavors().isEmpty() && (flavor.isBlank() || !product.getFlavors().contains(flavor))) {
+            throw new BadRequestException("Please choose a valid flavor");
+        }
+        if (product.getFlavors().isEmpty() && !flavor.isBlank()) {
+            throw new BadRequestException("This product does not have flavors");
+        }
+
         CartItem item = cartItemRepository
-                .findByCartIdAndProductId(cart.getId(), product.getId())
+                .findByCartIdAndProductIdAndFlavor(cart.getId(), product.getId(), flavor)
                 .orElse(null);
 
         if (item == null) {
@@ -96,6 +103,7 @@ public class CartServiceImpl implements CartService {
             item.setCart(cart);
             item.setProduct(product);
             item.setQuantity(request.getQuantity());
+            item.setFlavor(flavor);
 
             cart.getItems().add(item);
 
@@ -190,6 +198,7 @@ public class CartServiceImpl implements CartService {
                             .productId(item.getProduct().getId())
                             .productName(item.getProduct().getName())
                             .thumbnailUrl(item.getProduct().getThumbnailUrl())
+                            .flavor(item.getFlavor())
                             .quantity(item.getQuantity())
                             .price(price)
                             .subtotal(price.multiply(BigDecimal.valueOf(item.getQuantity())))

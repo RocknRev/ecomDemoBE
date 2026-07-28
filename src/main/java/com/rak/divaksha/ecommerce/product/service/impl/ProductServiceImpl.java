@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -57,12 +58,19 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(request.getDescription());
         product.setSku(request.getSku());
         product.setBrand(request.getBrand());
+        product.setNetWeight(request.getNetWeight());
+        product.setNutritionInfo(request.getNutritionInfo());
+        product.setAllergenInfo(request.getAllergenInfo());
+        product.setStorageInstructions(request.getStorageInstructions());
         product.setPrice(request.getPrice());
         product.setDiscountPrice(request.getDiscountPrice());
         product.setStock(request.getStock());
         product.setThumbnailUrl(request.getThumbnailUrl());
         product.setActive(request.getActive());
         product.setFeatured(request.getFeatured());
+        product.setFlavors(normalizeFlavors(request.getFlavors()));
+        product.setHighlights(normalizeFlavors(request.getHighlights()));
+        product.setIngredients(normalizeFlavors(request.getIngredients()));
 
         if (request.getImages() != null) {
 
@@ -127,6 +135,18 @@ public class ProductServiceImpl implements ProductService {
         if (request.getBrand() != null)
             product.setBrand(request.getBrand());
 
+        if (request.getNetWeight() != null)
+            product.setNetWeight(request.getNetWeight());
+
+        if (request.getNutritionInfo() != null)
+            product.setNutritionInfo(request.getNutritionInfo());
+
+        if (request.getAllergenInfo() != null)
+            product.setAllergenInfo(request.getAllergenInfo());
+
+        if (request.getStorageInstructions() != null)
+            product.setStorageInstructions(request.getStorageInstructions());
+
         if (request.getPrice() != null)
             product.setPrice(request.getPrice());
 
@@ -144,6 +164,15 @@ public class ProductServiceImpl implements ProductService {
 
         if (request.getFeatured() != null)
             product.setFeatured(request.getFeatured());
+
+        if (request.getFlavors() != null)
+            product.setFlavors(normalizeFlavors(request.getFlavors()));
+
+        if (request.getHighlights() != null)
+            product.setHighlights(normalizeFlavors(request.getHighlights()));
+
+        if (request.getIngredients() != null)
+            product.setIngredients(normalizeFlavors(request.getIngredients()));
 
         if (request.getSku() != null &&
                 !request.getSku().equals(product.getSku())) {
@@ -193,6 +222,15 @@ public class ProductServiceImpl implements ProductService {
 
         return StringUtils.defaultIfBlank(slug, "product");
 
+    }
+
+    private List<String> normalizeFlavors(List<String> flavors) {
+        if (flavors == null) return new ArrayList<>();
+        return flavors.stream()
+                .filter(StringUtils::isNotBlank)
+                .map(String::trim)
+                .distinct()
+                .toList();
     }
 
     @Override
@@ -250,7 +288,7 @@ public class ProductServiceImpl implements ProductService {
 
             images = product.getImages()
                     .stream()
-                    .sorted((a, b) -> a.getDisplayOrder().compareTo(b.getDisplayOrder()))
+                    .sorted(Comparator.comparing(ProductImage::getDisplayOrder))
                     .map(ProductImage::getImageUrl)
                     .toList();
 
@@ -266,12 +304,19 @@ public class ProductServiceImpl implements ProductService {
                 .description(product.getDescription())
                 .sku(product.getSku())
                 .brand(product.getBrand())
+                .netWeight(product.getNetWeight())
+                .nutritionInfo(product.getNutritionInfo())
+                .allergenInfo(product.getAllergenInfo())
+                .storageInstructions(product.getStorageInstructions())
                 .price(product.getPrice())
                 .discountPrice(product.getDiscountPrice())
                 .stock(product.getStock())
                 .thumbnailUrl(product.getThumbnailUrl())
                 .active(product.getActive())
                 .featured(product.getFeatured())
+                .flavors(product.getFlavors())
+                .highlights(product.getHighlights())
+                .ingredients(product.getIngredients())
                 .images(images)
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())

@@ -37,6 +37,17 @@ public class Product extends BaseEntity {
 
     private String brand;
 
+    private String netWeight;
+
+    @Column(columnDefinition = "TEXT")
+    private String nutritionInfo;
+
+    @Column(columnDefinition = "TEXT")
+    private String allergenInfo;
+
+    @Column(columnDefinition = "TEXT")
+    private String storageInstructions;
+
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal price;
 
@@ -54,6 +65,21 @@ public class Product extends BaseEntity {
 
     @Column(nullable = false)
     private Boolean featured = false;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "t_product_flavors", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "flavor", nullable = false)
+    private List<String> flavors = new ArrayList<>();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "t_product_highlights", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "highlight", nullable = false)
+    private List<String> highlights = new ArrayList<>();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "t_product_ingredients", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "ingredient", nullable = false)
+    private List<String> ingredients = new ArrayList<>();
 
     @OneToMany(
             mappedBy = "product",

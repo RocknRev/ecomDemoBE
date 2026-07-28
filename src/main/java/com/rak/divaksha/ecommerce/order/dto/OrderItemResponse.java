@@ -17,6 +17,8 @@ public class OrderItemResponse {
 
     private String sku;
 
+    private String flavor;
+
     private BigDecimal price;
 
     private Integer quantity;

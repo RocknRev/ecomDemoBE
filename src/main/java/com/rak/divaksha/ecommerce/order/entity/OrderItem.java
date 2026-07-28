@@ -27,6 +27,8 @@ public class OrderItem extends BaseEntity {
 
     private String sku;
 
+    private String flavor;
+
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal price;
 

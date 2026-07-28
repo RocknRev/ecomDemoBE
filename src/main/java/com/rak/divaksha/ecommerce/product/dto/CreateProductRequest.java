@@ -28,6 +28,14 @@ public class CreateProductRequest {
 
     private String brand;
 
+    private String netWeight;
+
+    private String nutritionInfo;
+
+    private String allergenInfo;
+
+    private String storageInstructions;
+
     @NotNull
     @DecimalMin("0.0")
     private BigDecimal price;
@@ -42,6 +50,12 @@ public class CreateProductRequest {
     private Boolean active = true;
 
     private Boolean featured = false;
+
+    private List<String> flavors;
+
+    private List<String> highlights;
+
+    private List<String> ingredients;
 
     private List<String> images;
 

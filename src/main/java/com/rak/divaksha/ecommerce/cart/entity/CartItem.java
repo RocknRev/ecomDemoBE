@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "t_cart_items")
+@Table(name = "t_cart_items", uniqueConstraints = @UniqueConstraint(columnNames = {"cart_id", "product_id", "flavor"}))
 public class CartItem extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -22,5 +22,8 @@ public class CartItem extends BaseEntity {
 
     @Column(nullable = false)
     private Integer quantity;
+
+    @Column(nullable = false, columnDefinition = "varchar(255) default ''")
+    private String flavor = "";
 
 }

@@ -19,6 +19,8 @@ public class CartItemResponse {
 
     private String thumbnailUrl;
 
+    private String flavor;
+
     private Integer quantity;
 
     private BigDecimal price;

@@ -31,6 +31,14 @@ public class ProductResponse {
 
     private String brand;
 
+    private String netWeight;
+
+    private String nutritionInfo;
+
+    private String allergenInfo;
+
+    private String storageInstructions;
+
     private BigDecimal price;
 
     private BigDecimal discountPrice;
@@ -42,6 +50,12 @@ public class ProductResponse {
     private Boolean active;
 
     private Boolean featured;
+
+    private List<String> flavors;
+
+    private List<String> highlights;
+
+    private List<String> ingredients;
 
     private List<String> images;
 
