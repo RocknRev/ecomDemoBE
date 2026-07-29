@@ -19,7 +19,7 @@ public class PaymentController {
 
     @PostMapping("/create")
     public ApiResponse<CreatePaymentResponse> createPayment(
-            @Valid @RequestBody CreatePaymentRequest request) {
+            @Valid @RequestBody CreatePaymentRequest request) throws Exception {
 
         return ApiResponse.<CreatePaymentResponse>builder()
                 .success(true)
@@ -31,7 +31,7 @@ public class PaymentController {
 
     @PostMapping("/verify")
     public ApiResponse<PaymentResponse> verifyPayment(
-            @Valid @RequestBody VerifyPaymentRequest request) {
+            @Valid @RequestBody VerifyPaymentRequest request) throws Exception {
 
         return ApiResponse.<PaymentResponse>builder()
                 .success(true)

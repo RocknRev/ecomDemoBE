@@ -137,9 +137,9 @@ public class OrderServiceImpl implements OrderService {
 
             subtotal = subtotal.add(lineTotal);
 
-            product.setStock(product.getStock() - cartItem.getQuantity());
-
-            productRepository.save(product);
+//            product.setStock(product.getStock() - cartItem.getQuantity());
+//
+//            productRepository.save(product);
         }
 
         order.setSubtotal(subtotal);
@@ -239,7 +239,7 @@ public class OrderServiceImpl implements OrderService {
             product.setStock(
                     product.getStock() + item.getQuantity());
 
-            productRepository.save(product);
+//            productRepository.save(product);
         }
 
         orderRepository.save(order);
