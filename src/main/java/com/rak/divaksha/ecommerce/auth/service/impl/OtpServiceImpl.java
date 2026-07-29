@@ -6,6 +6,7 @@ import com.rak.divaksha.ecommerce.auth.repository.EmailOtpRepository;
 import com.rak.divaksha.ecommerce.auth.service.MailService;
 import com.rak.divaksha.ecommerce.auth.service.OtpService;
 import com.rak.divaksha.ecommerce.exception.BadRequestException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -87,6 +88,7 @@ public class OtpServiceImpl implements OtpService {
                 .orElse(false);
     }
 
+    @Transactional
     @Override
     public void clearOtp(String email) {
 
