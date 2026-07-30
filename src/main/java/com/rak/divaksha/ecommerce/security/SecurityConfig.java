@@ -31,7 +31,7 @@ public class SecurityConfig {
 		CorsConfiguration configuration = new CorsConfiguration();
 
 		configuration.setAllowedOrigins(List.of(
-				"https://ecom-demo-80q42tqki-manoj-rs-projects-dffd91a3.vercel.app/",
+				"https://ecom-demo-fe.vercel.app",
 				"http://localhost:3000",           // Local Next.js
 				"https://your-frontend.vercel.app" // Production FE
 		));
