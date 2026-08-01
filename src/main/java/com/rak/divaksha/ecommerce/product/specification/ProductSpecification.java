@@ -15,6 +15,7 @@ public class ProductSpecification {
         return (root, query, cb) -> {
 
             var predicate = cb.conjunction();
+            predicate = cb.and(predicate, cb.isTrue(root.get("active")));
 
             if (search != null && !search.isBlank()) {
 

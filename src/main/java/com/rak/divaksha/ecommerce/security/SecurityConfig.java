@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,8 +32,10 @@ public class SecurityConfig {
 		CorsConfiguration configuration = new CorsConfiguration();
 
 		configuration.setAllowedOrigins(List.of(
-				"http://localhost:3000",           // Local Next.js
-				"https://your-frontend.vercel.app" // Production FE
+				"http://localhost:8080/",
+				"http://localhost:3000",           // Local Next.js 
+				"https://your-frontend.vercel.app", // Production FE
+				"https://meal-altered-suggestion-loaded.trycloudflare.com/"
 		));
 
 		configuration.setAllowedMethods(List.of(
@@ -59,7 +62,7 @@ public class SecurityConfig {
 
 		http
 				.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-				.csrf(csrf -> csrf.disable())
+				.csrf(AbstractHttpConfigurer::disable)
 
 				.sessionManagement(session ->
 						session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -67,6 +70,7 @@ public class SecurityConfig {
 				.authorizeHttpRequests(auth -> auth
 
 						.requestMatchers(
+//								"/", "/index.html", "/_next/**", "/favicon.ico", "/**/*.js", "/**/*.css", "/**/*.png", "/**/*.jpg", "/**/*.svg",
 								"/api/auth/**",
 								"/swagger-ui/**", "/api/products/**", "api/categories/**",
 								"/api-docs/**", "/v3/**")

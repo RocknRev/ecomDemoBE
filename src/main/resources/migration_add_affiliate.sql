@@ -113,26 +113,6 @@ CREATE TABLE t_products
             REFERENCES categories(id)
 );
 
-CREATE TABLE t_product_images
-(
-    id BIGSERIAL PRIMARY KEY,
-
-    product_id BIGINT NOT NULL,
-
-    image_url TEXT NOT NULL,
-
-    display_order INT NOT NULL DEFAULT 0,
-
-    created_at TIMESTAMP NOT NULL,
-
-    updated_at TIMESTAMP,
-
-    CONSTRAINT fk_product_image
-        FOREIGN KEY(product_id)
-            REFERENCES products(id)
-            ON DELETE CASCADE
-);
-
 CREATE TABLE t_addresses
 (
     id BIGSERIAL PRIMARY KEY,
