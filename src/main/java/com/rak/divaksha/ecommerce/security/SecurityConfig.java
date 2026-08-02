@@ -35,6 +35,7 @@ public class SecurityConfig {
 				"https://ecom-demo-fe.vercel.app"
 //				,"http://localhost:3000"          // Local Next.js
 //				,"https://your-frontend.vercel.app" // Production FE
+
 		));
 
 		configuration.setAllowedMethods(List.of(
